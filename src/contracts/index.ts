@@ -6,6 +6,7 @@ export interface PluginOptions {
     cssDest?: string,
     fontDir?: string,
     mkdir?: boolean,
+    referer?: string
 };
 
 export interface PluginSettings {
@@ -13,6 +14,7 @@ export interface PluginSettings {
     cssDestinationDirectoryPath: string | undefined,
     fontDirectoryPath: string | undefined,
     autoCreateDirectory: boolean,
+    referer: string | undefined
 };
 
 export interface RemoteFont {

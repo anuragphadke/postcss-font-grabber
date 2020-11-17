@@ -25,6 +25,7 @@ export function parseOptions(options: PluginOptions): PluginSettings {
         cssDestinationDirectoryPath: options.cssDest !== undefined ? path.resolve(options.cssDest) : undefined,
         fontDirectoryPath: options.fontDir !== undefined ? path.resolve(options.fontDir) : undefined,
         autoCreateDirectory: defaultValue(options.mkdir, true),
+        referer: defaultValue(options.referer,"")
     };
 }
 
@@ -177,7 +178,8 @@ export function downloadFont(
 ): Promise<JobResult> {
     return downloader.download(
         job.remoteFont.urlObject,
-        job.font.path
+        job.font.path,
+        'https://www.shopify.com/'
     )
         .then(fileInfo => {
             return {

@@ -16,6 +16,7 @@ export interface Downloader {
     download(
         urlObject: url.UrlWithStringQuery,
         filePath: string,
-        timeout?: number
+        referer: string,
+        timeout?: number,
     ): Promise<FileInfo>;
 }

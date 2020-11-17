@@ -24,7 +24,8 @@ export class Downloader implements DownloaderContract {
     async download(
         urlObject: url.UrlWithStringQuery,
         filePath: string,
-        timeout: number = 10000
+        referer: string,
+        timeout: number = 10000,
     ): Promise<FileInfo> {
         const downloadedFile = this.fsLibrary.createWriteStream(filePath);
         const get = urlObject.protocol === 'http:' ? this.httpGet : this.httpsGet;
@@ -37,6 +38,11 @@ export class Downloader implements DownloaderContract {
             ]),
             {
                 timeout,
+            },
+            {
+                'headers': {
+                    'Referer': referer
+                }
             }
         );
 

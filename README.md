@@ -1,3 +1,8 @@
+To Build
+install tsc
+npm install typescript --save-dev -g
+tsc --project tsconfig.json
+
 <h1 align=center>
     PostCSS Font Grabber
 </h1>

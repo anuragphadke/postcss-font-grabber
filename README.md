@@ -1,3 +1,6 @@
+tsc --project tsconfig.json  && gulp --gulpfile ../postcss-font-cleanup/gulpfile.js font_grabber --input /Users/aphadke/webfast/postleaf/public/pure-amp/build-automation/seekcapital-com/main.css --output /Users/aphadke/webfast/postleaf/public/pure-amp/build-automation/seekcapital-com/cleanup.css/ --domain seekcapital-com --base /Users/aphadke/webfast/postleaf/public/pure-amp/build-automation/seekcapital-com/custom_webfast_font_files/ --referer https://www.seekcapital.com/
+
+
 To Build
 install tsc
 npm install typescript --save-dev -g

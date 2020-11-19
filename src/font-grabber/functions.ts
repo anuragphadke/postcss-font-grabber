@@ -15,17 +15,19 @@ const fontExtensionToFormatMap: Dictionary<string> = {
     '.svg': 'svg',
 };
 
+let font_referer
 /**
  * 
  * @param unvalidatedOptions 
  */
 export function parseOptions(options: PluginOptions): PluginSettings {
+    font_referer = options.referer
     return <PluginSettings>{
         cssSourceDirectoryPath: options.cssSrc !== undefined ? path.resolve(options.cssSrc) : undefined,
         cssDestinationDirectoryPath: options.cssDest !== undefined ? path.resolve(options.cssDest) : undefined,
         fontDirectoryPath: options.fontDir !== undefined ? path.resolve(options.fontDir) : undefined,
         autoCreateDirectory: defaultValue(options.mkdir, true),
-        referer: defaultValue(options.referer,"")
+        referer: defaultValue(options.referer, "")
     };
 }
 
@@ -176,10 +178,11 @@ export function downloadFont(
     job: Job,
     downloader: DownloaderContract = new Downloader()
 ): Promise<JobResult> {
+    //add referer
     return downloader.download(
         job.remoteFont.urlObject,
         job.font.path,
-        'https://www.shopify.com/'
+        font_referer
     )
         .then(fileInfo => {
             return {

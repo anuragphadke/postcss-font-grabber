@@ -76,7 +76,6 @@ export class FontGrabber {
             debug(`CSS file: [${root.source.input.file}]`);
 
             const postcssOptionsTo = this.getOptionFromPostcssResult(result, 'to');
-
             const cssOutputToDirectory = calculateCssOutputDirectoryPath(
                 root.source.input.file,
                 this.settings.cssSourceDirectoryPath,
@@ -109,8 +108,9 @@ export class FontGrabber {
             root.walkAtRules(/font-face/, rule => rule.each(declarationProcessor));
 
             const uniqueJobs = unique(jobs, job => md5(url.format(job.remoteFont.urlObject) + job.css.sourcePath));
-
             return this.createDirectoryIfWantTo(fontOutputToDirectory)
+            // Promise.all(promises.map(p => p.catch(() => undefined)));
+
                 .then(() => Promise.all(uniqueJobs.map(job => downloadFont(job))))
                 .then(jobResults => this.done(jobResults));
         };

@@ -27,7 +27,7 @@ export class Downloader implements DownloaderContract {
         urlObject: url.UrlWithStringQuery,
         filePath: string,
         referer: string,
-        timeout: number = 10000, //10seconds
+        timeout: number = 2000, //10seconds
     ): Promise<FileInfo> {
         const downloadedFile = this.fsLibrary.createWriteStream(filePath);
         const get = urlObject.protocol === 'http:' ? this.httpGet : this.httpsGet;

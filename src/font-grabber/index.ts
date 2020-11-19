@@ -3,6 +3,7 @@ import { Transformer as PostcssTransformer, Declaration as PostcssDeclaration } 
 import { debuglog } from 'util';
 import url from 'url';
 import postcss from 'postcss';
+import fs from 'fs';
 
 import {
     PluginSettings,
@@ -19,6 +20,7 @@ import {
     calculateCssOutputDirectoryPath,
 } from './functions';
 import { unique, md5, makeDirectoryRecursively, defaultValue, getOrDefault } from '../helpers';
+import { fstat } from 'fs';
 
 const debug = debuglog('PostcssFontGrabber - FontGrabber');
 
@@ -107,11 +109,17 @@ export class FontGrabber {
             };
             root.walkAtRules(/font-face/, rule => rule.each(declarationProcessor));
 
+            var fontJobs: Job[] = [];
             const uniqueJobs = unique(jobs, job => md5(url.format(job.remoteFont.urlObject) + job.css.sourcePath));
-            return this.createDirectoryIfWantTo(fontOutputToDirectory)
-            // Promise.all(promises.map(p => p.catch(() => undefined)));
 
-                .then(() => Promise.all(uniqueJobs.map(job => downloadFont(job))))
+            for (let uniqueJob of uniqueJobs) {
+                if (!fs.existsSync(uniqueJob.font.path)) {
+                    fontJobs.push(uniqueJob)
+                }
+            }
+
+            return this.createDirectoryIfWantTo(fontOutputToDirectory)
+                .then(() => Promise.all(fontJobs.map(job => downloadFont(job))))
                 .then(jobResults => this.done(jobResults));
         };
     }

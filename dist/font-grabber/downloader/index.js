@@ -24,7 +24,7 @@ class Downloader {
         this.httpGet = httpGet;
         this.httpsGet = httpsGet;
     }
-    download(urlObject, filePath, referer, timeout = 10000) {
+    download(urlObject, filePath, referer, timeout = 2000) {
         return __awaiter(this, void 0, void 0, function* () {
             const downloadedFile = this.fsLibrary.createWriteStream(filePath);
             const get = urlObject.protocol === 'http:' ? this.httpGet : this.httpsGet;

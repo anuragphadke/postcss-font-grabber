@@ -113,7 +113,7 @@ export class FontGrabber {
             const uniqueJobs = unique(jobs, job => md5(url.format(job.remoteFont.urlObject) + job.css.sourcePath));
 
             for (let uniqueJob of uniqueJobs) {
-                if (!fs.existsSync(uniqueJob.font.path)) {
+                if (!fs.existsSync(uniqueJob.font.path) || (fs.existsSync(uniqueJob.font.path) && fs.statSync(uniqueJob.font.path).size == 0)) {
                     fontJobs.push(uniqueJob)
                 }
             }
